@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath "io.freefair.gradle:lombok-plugin:4.1.6"
+    }
+}
+plugins {
+    id 'java'
+}
+apply plugin: "io.freefair.lombok"
+apply plugin: 'application'
+
+mainClassName = "TestDriver"
+
+group 'com.mtecresults.ranking'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+dependencies {
+    implementation 'com.github.cmagnuson:OrderStatisticTree:duplicate-entry-counting-separate-tree-SNAPSHOT'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.opencsv:opencsv:4.5'
+    testCompile 'mysql:mysql-connector-java:8.0.19'
+}
